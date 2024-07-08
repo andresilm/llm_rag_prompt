@@ -37,5 +37,5 @@ tag-latest: build
 	docker tag $(IMAGE_NAME):$(IMAGE_VERSION) $(IMAGE_NAME):latest
 
 .PHONY: docker-run
-docker-run:
+docker-run: docker-build
 	docker run -p 8000:8000 --rm -it $(IMAGE_NAME):$(IMAGE_VERSION)

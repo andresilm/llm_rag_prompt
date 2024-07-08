@@ -19,15 +19,15 @@ make run
 
 ### Run in docker container
 
-#### Create docker image
-```
-make docker-build
-```
-
-#### Launch container and start application
+#### Create image if needed and launch container with application
 
 ```
 make docker-run
+```
+
+#### Create docker image only
+```
+make docker-build
 ```
 
 ## How to use
