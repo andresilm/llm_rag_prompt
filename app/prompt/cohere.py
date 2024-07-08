@@ -9,11 +9,16 @@ class CoherePrompt:
 
     def ask_question(self, user_input, context):
 
-        prompt = f"""{context}
-        Given the information above, answer this question: {user_input}"""
+        prompt = f"""Context: {context}\n.
+        Given the information above, answer this question: 
+        \"{user_input}\" . 
+        The answer must meet this requirements:
+        - Answer in just one sentence.
+        - The language must be the same as the one in which the question is asked.
+        - Add emojis in the sentence that summarize its content.
+        - Always respond in the third person. 
+        """
 
-        response = self.__cohere_client.generate(
-            prompt=prompt
-        )
+        response = self.__cohere_client.generate(prompt=prompt, temperature=0)  # temperature=0 ==> determinism
 
         return response.generations[0].text.strip()

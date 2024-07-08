@@ -31,7 +31,8 @@ class PromptContext:
         encode = embedding_functions.CohereEmbeddingFunction(api_key=COHERE_API_KEY)
         collection = self.__chroma_client.get_or_create_collection(name=COLLECTION_NAME,
                                                                    metadata=metadata_options,
-                                                                   embedding_function=encode)
+                                                                   #embedding_function=encode
+                                                                   )
 
         return collection
 
