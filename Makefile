@@ -22,5 +22,20 @@ clean:
 	rm -rf $(VENV_DIR)
 
 
+IMAGE_NAME = andresilm/context_prompt
 
+IMAGE_VERSION = 1.0
 
+DOCKERFILE = Dockerfile
+
+.PHONY: docker-build
+docker-build:
+	docker build -t $(IMAGE_NAME):$(IMAGE_VERSION) -f $(DOCKERFILE) .
+
+.PHONY: tag-latest
+tag-latest: build
+	docker tag $(IMAGE_NAME):$(IMAGE_VERSION) $(IMAGE_NAME):latest
+
+.PHONY: docker-run
+docker-run:
+	docker run -p 8000:8000 --rm -it $(IMAGE_NAME):$(IMAGE_VERSION)
