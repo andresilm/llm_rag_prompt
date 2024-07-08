@@ -1,11 +1,10 @@
-import cohere
 
 COHERE_API_KEY = '0gzbXiqJmVIkL3zDTxZ4LHoVccVDBj3R7HreHbNB'
 
 
 class CoherePrompt:
-    def __init__(self):
-        self.__cohere_client = cohere.Client(COHERE_API_KEY)
+    def __init__(self, client):
+        self.__cohere_client = client
 
     def ask_question(self, user_input, context):
 
@@ -14,11 +13,11 @@ class CoherePrompt:
         \"{user_input}\" . 
         The answer must meet this requirements:
         - Answer in just one sentence.
-        - The language must be the same as the one in which the question is asked.
+        - Answer in the same language as the question.
         - Add emojis in the sentence that summarize its content.
         - Always respond in the third person. 
         """
-
-        response = self.__cohere_client.generate(prompt=prompt, temperature=0)  # temperature=0 ==> determinism
+        # temperature=0 => determinism
+        response = self.__cohere_client.generate(prompt=prompt, temperature=0)
 
         return response.generations[0].text.strip()
