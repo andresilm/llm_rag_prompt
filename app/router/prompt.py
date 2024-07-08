@@ -2,13 +2,14 @@ from fastapi import APIRouter
 from pydantic import Field, BaseModel
 from starlette import status
 
-import cohere
-from app.prompt.cohere import CoherePrompt, COHERE_API_KEY
+from app.cohere_client import cohere_client
+from app.prompt.cohere_prompt import CoherePrompt
 from app.prompt.context import PromptContext
 
 router = APIRouter(prefix='/cohere', tags=['Prompt'])
-client = cohere.Client(COHERE_API_KEY)
-context = PromptContext(client)
+
+context = PromptContext(cohere_client)
+prompt = CoherePrompt(cohere_client)
 
 
 class PromptRequest(BaseModel):
@@ -18,6 +19,6 @@ class PromptRequest(BaseModel):
 
 @router.post('/', status_code=status.HTTP_200_OK)
 async def ask_to_cohere(request: PromptRequest):
-    prompt = CoherePrompt(client)
+
     relevant_chunk = context.get_context(request.question)
     return prompt.ask_question(request.question, relevant_chunk)

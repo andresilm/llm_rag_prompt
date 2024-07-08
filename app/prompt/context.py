@@ -1,12 +1,13 @@
 import glob
 import os
 import chromadb
-import chromadb.utils.embedding_functions as embedding_functions
 import uuid
+import logging
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from app.prompt.cohere import COHERE_API_KEY
 from chromadb.config import DEFAULT_TENANT, DEFAULT_DATABASE, Settings
+
+logger = logging.getLogger(__name__)
 
 DOCUMENTS_PATH = 'app/documents'
 COLLECTION_NAME = 'code_challenge_docs'
@@ -44,7 +45,7 @@ class PromptContext:
                                                           input_type="search_query")
                     embedding = response.embeddings[0]
                     embedding = embedding.tolist() if hasattr(embedding, 'tolist') else embedding
-                    print(f'Will add document:\n<{doc.page_content}>\nembedding length = {len(embedding)}')
+                    logger.info(f'Will add document:\n<{doc.page_content}>\nembedding length = {len(embedding)}')
                     documents.append(doc.page_content)
                     ids.append(uuid_name)
                     embeddings.append(embedding)
@@ -57,5 +58,5 @@ class PromptContext:
                                               input_type="search_query")
         input_embedding = response.embeddings[0]
         similar_chunk = self._collection.query(query_embeddings=[input_embedding], n_results=1)['documents'][0]
-        print(f'Most relevant document:\n{similar_chunk}')
+        logger.info(f'Most relevant document:\n{similar_chunk}')
         return similar_chunk
