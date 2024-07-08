@@ -1,11 +1,9 @@
 from fastapi import FastAPI
 import uvicorn
-
-from app.prompt.cohere import Prompt
-
+from app.router import prompt
 
 app = FastAPI()
-prompt = Prompt()
+
 
 app.include_router(prompt.router)
 
