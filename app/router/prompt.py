@@ -3,13 +3,13 @@ from pydantic import Field, BaseModel
 from starlette import status
 
 from app.cohere_client import cohere_client
-from app.prompt.cohere_prompt import CoherePrompt
+from app.prompt.cohere import Cohere
 from app.prompt.context import PromptContext
 
-router = APIRouter(prefix='/cohere', tags=['Prompt'])
+router = APIRouter(prefix='/prompt', tags=['Prompt'])
 
 context = PromptContext(cohere_client)
-prompt = CoherePrompt(cohere_client)
+prompt = Cohere(cohere_client)
 
 
 class PromptRequest(BaseModel):
