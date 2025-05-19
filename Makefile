@@ -22,7 +22,7 @@ clean:
 	rm -rf $(VENV_DIR)
 
 
-IMAGE_NAME = andresilm/context_prompt
+IMAGE_NAME = andresilm/rag_service
 
 IMAGE_VERSION = 1.0
 
@@ -38,4 +38,4 @@ tag-latest: build
 
 .PHONY: docker-run
 docker-run: docker-build
-	docker run -p 8000:8000 --rm -it $(IMAGE_NAME):$(IMAGE_VERSION)
+	docker run -p 8080:8080 --rm -it $(IMAGE_NAME):$(IMAGE_VERSION)

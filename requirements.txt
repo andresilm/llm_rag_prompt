@@ -4,3 +4,4 @@ cohere
 chromadb==0.5.3
 docx
 langchain==0.0.208
+requests

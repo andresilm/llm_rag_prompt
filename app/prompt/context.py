@@ -29,7 +29,7 @@ class PromptContext:
         return self.__chroma_client.get_or_create_collection(name=COLLECTION_NAME)
 
     def __add_docs_in_folder(self, folder: str):
-        text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n"], chunk_size=512, chunk_overlap=0)
+        text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n"], chunk_size=256, chunk_overlap=100)
         files = glob.glob(folder + os.sep + "*.txt")
         documents = []
         ids = []
